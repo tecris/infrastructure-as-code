@@ -6,13 +6,16 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu-14-04-x64-virtualbox-cd"
+
   # jenkins
   config.vm.network "forwarded_port", guest: 8080, host: 18080
   # nexus
   config.vm.network "forwarded_port", guest: 8081, host: 18081
   # docker registry
   config.vm.network "forwarded_port", guest: 443, host: 1443
-  
+
+  config.vm.synced_folder ".", "/opt/docker_volumes"
+
   config.vm.provider "virtualbox" do |v|
     v.name = "continuous"
     v.memory = 4096
