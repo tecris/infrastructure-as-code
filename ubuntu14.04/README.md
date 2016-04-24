@@ -21,8 +21,8 @@
 
   ```
   $ vagrant up
-  $ vagrant package --output ubuntu-14-04-x64-virtualbox-cd-1.0.1.box
-  $ vagrant box add ubuntu-14-04-x64-virtualbox-cd-cd-1.0.1 ubuntu-14-04-x64-virtualbox-cd-cd-1.0.1.box
+  $ vagrant package --output ubuntu-14-04-x64-virtualbox-cd-1.0.2.box
+  $ vagrant box add ubuntu-14-04-x64-virtualbox-cd-cd-1.0.2 ubuntu-14-04-x64-virtualbox-cd-cd-1.0.2.box
   ```
  * Run image
 
