@@ -9,6 +9,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # continuous delivery demo
   config.vm.network "forwarded_port", guest: 8000, host: 18000
+  # continuous delivery demo 2
+  config.vm.network "forwarded_port", guest: 8001, host: 18001
+  # continuous delivery demo 3
+  config.vm.network "forwarded_port", guest: 8002, host: 18002
   # jenkins
   config.vm.network "forwarded_port", guest: 8080, host: 18080
   # nexus
