@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu-14-04-x64-virtualbox-cd-1.0.2"
 
   config.vm.network "forwarded_port", guest: 22, host:2222, id: "ssh"
+  config.vm.network "forwarded_port", guest: 2224, host: 2224
   # continuous delivery demo
   config.vm.network "forwarded_port", guest: 8000, host: 18000
   # continuous delivery demo 2
