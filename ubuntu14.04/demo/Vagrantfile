@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 8081, host: 18081
   # docker registry
   config.vm.network "forwarded_port", guest: 443, host: 1443
-
+  # share project directory (the directory with the Vagrantfile) to /opt/docker_volumes
   config.vm.synced_folder ".", "/opt/docker_volumes"
 
   config.vm.provider "virtualbox" do |v|
