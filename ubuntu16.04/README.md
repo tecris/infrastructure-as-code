@@ -18,4 +18,5 @@
   ```
     $ ansible-galaxy install -r requirements.yml
     $ echo '[local]\nlocalhost\n' > /etc/ansible/hosts
+    $ ansible-playbook -e "username=THE_USER_NAME" ansible/playbook.yml -c local
   ```
