@@ -9,4 +9,10 @@
  
 
 #### Build instructions
-  TODO
+**Vagrant**
+
+ TODO
+ 
+**Directly on Ubuntu**
+
+`ansible-galaxy install -r requirements.yml`
