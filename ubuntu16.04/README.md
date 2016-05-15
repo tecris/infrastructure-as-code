@@ -15,4 +15,7 @@
  
 **Directly on Ubuntu**
 
-`ansible-galaxy install -r requirements.yml`
+  ```
+    $ ansible-galaxy install -r requirements.yml
+    $ echo '[local]\nlocalhost\n' > /etc/ansible/hosts
+  ```
