@@ -5,5 +5,5 @@
 
 **How to run**
  * Pre-requisites
-  * Deploy docker registry certificates (see docker_registry/README.txt)
+  * Deploy docker registry [certificates](docker_registry/README.txt)
  * `$ ./startCdInfrastructure.sh`
