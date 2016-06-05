@@ -5,7 +5,7 @@ TLS: self-signed certificates
 
 https://github.com/docker/distribution/blob/v2.2.1/docs/deploying.md
 
-Configure & start
+Deploy certificates
 -) $ ./deployBlueskyCertificates.sh                   # deploy certificates
 
 Browse registry:
