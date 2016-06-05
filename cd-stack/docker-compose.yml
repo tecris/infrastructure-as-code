@@ -1,0 +1,161 @@
+version: '2'
+services:
+
+  # Nexus maven repository
+  # sonatype.com/download-oss-sonatype
+  nexus:
+    image: sonatype/nexus:2.12.0-01
+    container_name: nexus
+    restart: always
+    ports:
+      - "8081:8081"
+    volumes:
+      - nexus-data:/sonatype-work
+    networks:
+      cd_net:
+        ipv4_address: 172.16.238.10
+
+  # Raw git server
+  # https://github.com/tecris/dockerfiles/tree/master/git-server
+  git-server:
+    image: casadocker/git-server:16.06.05
+    container_name: git-server
+    restart: always
+    ports:
+      - "2224:22"
+    volumes:
+      - git-server-data:/opt/git/repositories
+    networks:
+      cd_net:
+
+  # Jenkins with custom modifications
+  # https://github.com/tecris/dockerfiles/tree/master/jenkins
+  jenkins:
+    image: casadocker/jenkins:1.651.1-1
+    container_name: jenkins
+    restart: always
+    environment:
+      JENKINS_OPTS: --prefix=/iv-jenkins
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - iv-tests-data:/opt/jenkins/iv-e2e-java/site/serenity/
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "docker.host:${DOCKER_IP}"
+    networks:
+      cd_net:
+        ipv4_address: 172.16.238.20
+
+  # used to serve E2E test reports
+  nginx:
+    image: nginx:1.10
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.htpasswd:/etc/nginx/.htpasswd:ro
+      - iv-tests-data:/usr/share/nginx/html/iv-tests
+    ports:
+      - "8002:80"
+    networks:
+      cd_net:
+
+  # docker private registry
+  bluesky-registry:
+    image: registry:2
+    container_name: blue.sky
+    restart: always
+    ports:
+      - 443:5000
+    environment:
+      # how to override configuration
+      # https://docs.docker.com/registry/configuration/#override-specific-configuration-options
+      # https://github.com/docker/distribution/blob/master/docs/configuration.md
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /var/lib/registry
+    volumes:
+      - /opt/docker_volumes/registry/blue.sky/data:/var/lib/registry
+      - /opt/docker_volumes/registry/blue.sky/certs:/certs
+    networks:
+      cd_net:
+        ipv4_address: 172.16.238.21
+
+  # Selenium Grid hub
+  selhub:
+    image: selenium/hub
+    container_name: selenium-hub
+    ports:
+      - 4444:4444
+    networks:
+      - cd_net
+
+  # Selenium Grid firefox node
+  nodeff:
+    image: selenium/node-firefox-debug
+    container_name: selenium-firefox-node
+    ports:
+      - 5900
+    extra_hosts:
+      - "docker.host:${DOCKER_IP}"
+    networks:
+      - cd_net
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=selhub
+    depends_on:
+      - selhub
+
+  # database used by sonar
+  sonar-db:
+    image: postgres:9.5
+    container_name: sonar-db
+    environment:
+      - POSTGRES_DB=sonar
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    networks:
+      - cd_net
+
+  # sonarqube.org - quality management platform
+  sonar:
+    image: sonarqube:5.4-alpine
+    container_name: sonar
+    ports:
+      - "9000:9000"
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://sonar-db:5432/sonar
+    depends_on:
+      - sonar-db
+    networks:
+      - cd_net
+
+networks:
+  cd_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+
+volumes:
+  iv-tests-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  nexus-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  git-server-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  jenkins-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
