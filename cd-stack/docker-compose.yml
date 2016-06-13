@@ -31,7 +31,8 @@ services:
   # Jenkins with custom modifications
   # https://github.com/tecris/dockerfiles/tree/master/jenkins
   jenkins:
-    image: casadocker/jenkins:1.651.1-1
+    build: ./jenkins
+    image: casadocker/jenkins-cd:1.651.2-1
     container_name: jenkins
     restart: always
     environment:
@@ -43,6 +44,7 @@ services:
       - "8080:8080"
     extra_hosts:
       - "docker.host:${DOCKER_IP}"
+      - "cloud.atlas:${DOCKER_IP}"
     networks:
       cd_net:
         ipv4_address: 172.16.238.20
@@ -93,8 +95,8 @@ services:
 
   # Selenium Grid firefox node
   nodeff:
-    image: selenium/node-firefox-debug
-    container_name: selenium-firefox-node
+    image: selenium/node-firefox
+    container_name: selenium-firefox
     ports:
       - 5900
     extra_hosts:
