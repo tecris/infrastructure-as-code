@@ -3,9 +3,20 @@
   become_method: sudo
   vars:
     username: vagrant
+  pre_tasks:
+    - file: path=/opt/docker-certs owner={{username}} group={{username}} state=directory mode=0775
+    - name: CA certificate
+      copy: src=files/ca.pem dest=/opt/docker-certs/ca.pem owner={{username}} group={{username}}
+    - name: server-cert certificate
+      copy: src=files/server-cert.pem dest=/opt/docker-certs/server-cert.pem owner={{username}} group={{username}}
+    - name: server-key certificate
+      copy: src=files/server-cert.pem dest=/opt/docker-certs/server-cert.pem owner={{username}} group={{username}}
   roles:
     - { role: angstwad.docker_ubuntu,
-      docker_opts: "-H tcp://0.0.0.0:4243 -H unix:///var/run/docker.sock --registry-mirror=https://registry.mirror:5000"
+      docker_opts: "--tlsverify --tlscacert=/opt/docker-certs/ca.pem \
+                       --tlscert=/opt/docker-certs/server-cert.pem \
+                       --tlskey=/opt/docker-certs/server-key.pem \
+                       -H=0.0.0.0:2376 -H unix:///var/run/docker.sock --registry-mirror=https://registry.mirror:5000"
     }
     - { role: geerlingguy.git }
   tasks:
