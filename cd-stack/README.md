@@ -1,9 +1,8 @@
 ##Continuous Delivery for a Java based project
 
 **Stack**
- * Please see services in `docker-compose.yml`.
+ * All continuous delivery components are deployed in docker containers.
+ * For a list of components see services in docker-compose.yml.
 
 **How to run**
- * Pre-requisites
-  * Deploy docker registry [certificates](docker_registry/README.txt)
  * `$ ./startCdInfrastructure.sh`
