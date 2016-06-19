@@ -57,8 +57,6 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./nginx/nginx.htpasswd:/etc/nginx/.htpasswd:ro
       - iv-tests-data:/usr/share/nginx/html/iv-tests
     ports:
       - "8002:80"
