@@ -31,9 +31,3 @@
       copy: src=files/docker_registry_certs/domain.crt dest=/opt/docker_volumes/registry/blue.sky/certs/domain.crt
     - name: Docker private registry key - private registry config
       copy: src=files/docker_registry_certs/domain.key dest=/opt/docker_volumes/registry/blue.sky/certs/domain.key
-#    - name: Networking
-#      iptables: action=insert chain=INPUT in_interface=br-xxxxxxxxxxx protocol=tcp jump=ACCEPT
-#  $ sudo iptables -I INPUT -i br-$(docker network ls | grep cdstack_cd_net | cut -f 1 -d "") -p tcp -j ACCEPT
-    - name: Networking
-      shell: iptables -I INPUT -i br-$(docker network ls | grep cdstack_cd_net | cut -f 1 -d "") -p tcp -j ACCEPT
-
