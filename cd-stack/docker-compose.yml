@@ -18,7 +18,8 @@ services:
   # Raw git server
   # https://github.com/tecris/dockerfiles/tree/master/git-server
   git-server:
-    image: casadocker/git-server:16.06.05
+    build: ./git-server
+    image: casadocker/git-server:16.06.15
     container_name: git-server
     restart: always
     ports:
@@ -51,7 +52,8 @@ services:
 
   # used to serve E2E test reports
   nginx:
-    image: nginx:1.10
+    build: ./nginx
+    image: casadocker/nginx:16.06.19
     container_name: nginx
     restart: always
     volumes:
