@@ -1,0 +1,16 @@
+https://docs.docker.com/engine/security/https/
+/etc/systemd/system/docker.service.d/docker.conf
+/etc/systemd/system/docker.service.d/env.conf
+
+# generate CA private and public keys:
+$ openssl genrsa -aes256 -out ca-key.pem 4096
+$ openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
+
+# create a server key and certificate signing request (CSR
+$ openssl genrsa -out server-key.pem 4096
+$ openssl req -subj "/CN=cloud.atlas" -sha256 -new -key server-key.pem -out server.csr
+
+# sign the public key with our CA
+$ echo subjectAltName = IP:192.168.1.2,IP:127.0.0.1,IP:cloud.atlas > extfile.cnf
+$ openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
+  -CAcreateserial -out server-cert.pem -extfile extfile.cnf

@@ -6,21 +6,34 @@
   pre_tasks:
     - file: path=/opt/docker-certs owner={{username}} group={{username}} state=directory mode=0775
     - name: CA certificate
-      copy: src=files/ca.pem dest=/opt/docker-certs/ca.pem owner={{username}} group={{username}}
+      copy: src=files/docker_daemon_certs/ca.pem dest=/opt/docker-certs/ca.pem owner={{username}} group={{username}}
     - name: server-cert certificate
-      copy: src=files/server-cert.pem dest=/opt/docker-certs/server-cert.pem owner={{username}} group={{username}}
+      copy: src=files/docker_daemon_certs/server-cert.pem dest=/opt/docker-certs/server-cert.pem owner={{username}} group={{username}}
     - name: server-key certificate
-      copy: src=files/server-cert.pem dest=/opt/docker-certs/server-cert.pem owner={{username}} group={{username}}
+      copy: src=files/docker_daemon_certs/server-key.pem dest=/opt/docker-certs/server-key.pem owner={{username}} group={{username}}
   roles:
-    - { role: angstwad.docker_ubuntu,
-      docker_opts: "--tlsverify --tlscacert=/opt/docker-certs/ca.pem \
+    - role: angstwad.docker_ubuntu
+      docker_opts: "-g /mnt/data/docker --tlsverify --tlscacert=/opt/docker-certs/ca.pem \
                        --tlscert=/opt/docker-certs/server-cert.pem \
                        --tlskey=/opt/docker-certs/server-key.pem \
                        -H=0.0.0.0:2376 -H unix:///var/run/docker.sock --registry-mirror=https://registry.mirror:5000"
-    }
-    - { role: geerlingguy.git }
+    - role: geerlingguy.git
   tasks:
     - name: Avoid using sudo when using docker command
       command: usermod -aG docker {{username}}
     - name: Installs vim package
       apt: pkg=vim state=installed update_cache=true
+    - file: path=/etc/docker/certs.d/blue.sky state=directory mode=0755
+    - name: Docker private registry CA certificate - docker daemon config
+      copy: src=files/docker_registry_certs/domain.crt dest=/etc/docker/certs.d/blue.sky/ca.crt
+    - file: path=/opt/docker_volumes/registry/blue.sky/certs owner={{username}} group={{username}} state=directory mode=0775
+    - name: Docker private registry CA certificate - private registry config
+      copy: src=files/docker_registry_certs/domain.crt dest=/opt/docker_volumes/registry/blue.sky/certs/domain.crt
+    - name: Docker private registry key - private registry config
+      copy: src=files/docker_registry_certs/domain.key dest=/opt/docker_volumes/registry/blue.sky/certs/domain.key
+#    - name: Networking
+#      iptables: action=insert chain=INPUT in_interface=br-xxxxxxxxxxx protocol=tcp jump=ACCEPT
+#  $ sudo iptables -I INPUT -i br-$(docker network ls | grep cdstack_cd_net | cut -f 1 -d "") -p tcp -j ACCEPT
+    - name: Networking
+      shell: iptables -I INPUT -i br-$(docker network ls | grep cdstack_cd_net | cut -f 1 -d "") -p tcp -j ACCEPT
+

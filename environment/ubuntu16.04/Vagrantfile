@@ -6,15 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "xenial-server-cloudimg-amd64-vagrant"
+  config.vm.box = "geerlingguy/ubuntu1604"
 
-  config.ssh.insert_key = false
-
-  config.vm.provision "shell",
-      inline: "apt-get install -y python"
-  
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/playbook.yml"
   end
-  
+
 end

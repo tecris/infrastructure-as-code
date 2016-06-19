@@ -7,9 +7,20 @@ if [ $# -eq 0 ]
 fi
 
 
-# ubuntu16.04 (xenial)
-sudo apt-get install -y ansible=2.0.0.2-2
+# check available versions for ansible
+# apt-cache policy ansible
 
+# install ansible
+sudo apt-get install -y software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install -y ansible=2.1.0.0-1ppa~xenial
+
+# install ansible roles
 sudo ansible-galaxy install -r requirements.yml
 
-cd ansible && sudo ansible-playbook -e "username=$1" -i hosts playbook.yml -c local --skip-tags "only-on-docker"
+# run ansible playbooks
+cd ansible 
+sudo ansible-playbook -i hosts drive.yml -c local
+sudo ansible-playbook -e "username=$1" -i hosts playbook.yml -c local
+

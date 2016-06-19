@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "xenial-server-cloudimg-amd64-vagrant-cd"
+  config.vm.box = "ubuntu-16-04-x64-virtualbox-cd-1.0.2"
 
   # by default vagrant binds port 22 only to 127.0.0.1
   # following allows binding to all interfaces
@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # nexus
   config.vm.network "forwarded_port", guest: 8081, host: 18081
   # sonar
-  config.vm.network "forwarded_port", guest: 8081, host: 18082
+  config.vm.network "forwarded_port", guest: 9000, host: 18082
 
   # share project directory (the directory with the Vagrantfile) to /opt/docker_volumes
   config.vm.synced_folder ".", "/opt/docker_volumes"
