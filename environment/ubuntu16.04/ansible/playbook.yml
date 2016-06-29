@@ -13,7 +13,7 @@
       copy: src=files/docker_daemon_certs/server-key.pem dest=/opt/docker-certs/server-key.pem owner={{username}} group={{username}}
   roles:
     - role: angstwad.docker_ubuntu
-      docker_opts: "-g /mnt/data/docker --tlsverify --tlscacert=/opt/docker-certs/ca.pem \
+      docker_opts: "--tlsverify --tlscacert=/opt/docker-certs/ca.pem \
                        --tlscert=/opt/docker-certs/server-cert.pem \
                        --tlskey=/opt/docker-certs/server-key.pem \
                        -H=0.0.0.0:2376 -H unix:///var/run/docker.sock --registry-mirror=https://registry.mirror:5000"
