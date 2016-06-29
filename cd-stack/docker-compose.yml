@@ -33,7 +33,7 @@ services:
   # https://github.com/tecris/dockerfiles/tree/master/jenkins
   jenkins:
     build: ./jenkins
-    image: casadocker/jenkins-cd:1.651.2-1
+    image: casadocker/jenkins:1.651.3
     container_name: jenkins
     restart: always
     environment:
