@@ -1,4 +1,4 @@
-## Continuous Delivery environment with Docker on Ubuntu 14.04
+## Continuous Delivery environment with Docker on Ubuntu 16.04
 
 
 ### Bare Ubuntu
