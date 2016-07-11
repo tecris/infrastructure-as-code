@@ -21,6 +21,5 @@ sudo ansible-galaxy install -r requirements.yml
 
 # run ansible playbooks
 cd ansible 
-sudo ansible-playbook -i hosts drive.yml -c local
 sudo ansible-playbook -e "username=$1" -i hosts playbook.yml -c local
 
