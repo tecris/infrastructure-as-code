@@ -19,7 +19,5 @@ sudo apt-get install -y ansible=2.1.0.0-1ppa~xenial
 # install ansible roles
 sudo ansible-galaxy install -r requirements.yml
 
-# run ansible playbooks
-cd ansible 
-sudo ansible-playbook -e "username=$1" -i hosts playbook.yml -c local
-
+# run ansible playbook
+sudo ansible-playbook -e "username=$1" -i ansible/hosts ansible/playbook.yml -c local
