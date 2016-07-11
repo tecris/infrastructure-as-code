@@ -1,3 +1,4 @@
-## Continuous Delivery environment with Docker on Ubuntu
+## Infrastructure & continuous delivery with Docker on Ubuntu
 
-[Ubuntu 16.04](environment/ubuntu16.04/README.md)
+ - [Provision](environment/ubuntu16.04/README.md) Ubuntu 16.04 for continuous delivery
+ - [Provision](cd-stack/README.md) continuous delivery stack
