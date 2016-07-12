@@ -4,7 +4,7 @@ services:
   # Nexus maven repository
   # sonatype.com/download-oss-sonatype
   nexus:
-    image: sonatype/nexus:2.12.0-01
+    image: sonatype/nexus:2.13.0-01
     container_name: nexus
     restart: always
     ports:
