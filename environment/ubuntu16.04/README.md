@@ -1,4 +1,11 @@
-## Continuous Delivery environment with Docker on Ubuntu 16.04
+## Continuous Delivery environment
+
+ - What is actually "Continuous Delivery Environment" ? This is the environment that will host the continuous delivery stack.
+ - What is "continuous delivery stack" ? Various components responsible for running the continuous delivery show. Main components implementing continuous delivery:
+   - jenkins
+   - docker
+   - docker compose
+   - nexus. 
 
 
 ### Bare Ubuntu
