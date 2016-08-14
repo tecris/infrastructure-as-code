@@ -47,3 +47,6 @@ Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-
 
 ##### Generate keys
   * `$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
+
+##### Git shell - how to
+  * http://planzero.org/blog/2012/10/24/hosting_an_admin-friendly_git_server_with_git-shell
