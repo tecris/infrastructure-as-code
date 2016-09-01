@@ -7,6 +7,8 @@
    - docker compose
    - nexus. 
 
+### Configure docker to use company proxy (HTTP PROXY)
+ - https://docs.docker.com/engine/admin/systemd/#/http-proxy
 
 ### Bare Ubuntu
  `$ ./bareUbuntu.sh`
