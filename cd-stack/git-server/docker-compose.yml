@@ -3,6 +3,7 @@ services:
 
 
   git-server:
+    build: .
     image: casadocker/git-server:16.06.05
     container_name: git-server
     restart: always
