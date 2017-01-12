@@ -17,9 +17,7 @@ Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-
   ```
   $ docker cp ionradan.git git-server:/opt/git/repositories    # move bare repository to git server
   # unfortunately permissions are not right, we need manual intervention
-  $ docker exec -it git-server bash                            # get inside git-server container
-  $ chown -R git:git /opt/git/repositories                     # fix permissions
-  $ exit                                                       # get out
+  $ docker exec -it git-server chown -R git:git /opt/git/repositories
   ```
 1. Clone repository
 
