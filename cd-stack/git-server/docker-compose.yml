@@ -9,6 +9,7 @@ services:
     restart: always
     ports:
       - "2224:22"
+      #- "9418:9418"
     volumes:
       - git-server-data:/opt/git/repositories
 
