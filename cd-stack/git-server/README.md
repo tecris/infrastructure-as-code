@@ -38,7 +38,7 @@ Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-
   [Reference](https://docs.docker.com/engine/tutorials/dockervolumes/)
 
   ```
-     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/git-repositories.tar /opt/git/repositories    # backup, will create a file git-repositories.tar
+     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /opt/git/repositories    # backup, will create a file git-repositories.tar
      $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu bash -c "cd /opt && tar xvf /backup/backup.tar --strip 1"    # restore
  ```
 
