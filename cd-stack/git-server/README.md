@@ -35,11 +35,12 @@ Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-
     ```
 1. Backup & Restore
 
+  [Reference](https://docs.docker.com/engine/tutorials/dockervolumes/)
+
   ```
-     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/git-repositories.tar /opt/git/repositories    # backup
+     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/git-repositories.tar /opt/git/repositories    # backup, will create a file git-repositories.tar
      $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu bash -c "cd /opt && tar xvf /backup/backup.tar --strip 1"    # restore
  ```
- * When the command completes and the container stops we’ll be left with a backup of /opt/git/repositories directory (from git-server container)
 
 ##### Add key
  * Add key to `files/authorized_keys` and rebuild image. Compromise to achieve the immutable environment principle.
