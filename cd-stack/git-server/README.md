@@ -33,10 +33,11 @@ Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-
     ```
     $ git clone git://localhost/ionradan.git
     ```
-1. Backup
+1. Backup & Restore
 
   ```
-     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/git-repositories.tar /opt/git/repositories
+     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu tar cvf /backup/git-repositories.tar /opt/git/repositories    # backup
+     $ docker run --rm --volumes-from git-server -v $(pwd):/backup ubuntu bash -c "cd /opt && tar xvf /backup/backup.tar --strip 1"    # restore
  ```
  * When the command completes and the container stops we’ll be left with a backup of /opt/git/repositories directory (from git-server container)
 
