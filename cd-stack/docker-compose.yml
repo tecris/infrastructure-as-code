@@ -24,6 +24,7 @@ services:
     restart: always
     ports:
       - "2224:22"
+      - "9418:9418"
     volumes:
       - git-server-data:/opt/git/repositories
     networks:
@@ -142,22 +143,6 @@ networks:
 
 volumes:
   iv-tests-data:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
   nexus-data:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
   git-server-data:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
   jenkins-data:
-    driver: local
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
