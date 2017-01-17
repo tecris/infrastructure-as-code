@@ -19,3 +19,6 @@ How to create new self-signed certificates
        -x509 -days 365 -out certs/domain.crt
 
   FQDN: blue.sky
+
+How to check for what dates is the certificate valid
+ $ cat domain.crt | openssl x509 -noout -issuer -subject -dates
