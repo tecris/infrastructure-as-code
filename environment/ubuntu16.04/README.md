@@ -14,7 +14,7 @@
  `$ ./bareUbuntu.sh`
 
 
-### Vagrant###
+### Vagrant
 **Pre-requisites:**
   * [Oracle VM VirtualBox](http://www.virtualbox.org)
   * [Vagrant](http://www.vagrantup.com) v1.8.4
