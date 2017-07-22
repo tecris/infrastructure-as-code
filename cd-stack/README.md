@@ -1,4 +1,4 @@
-##Continuous Delivery for a Java based project
+## Continuous Delivery for a Java based project
 
 **Stack**
  * All continuous delivery components are deployed in docker containers.
