@@ -8,11 +8,11 @@
 ################################################################################
 
 
-FROM jenkins:1.651.3
+FROM jenkins:2.60.2
 
 ENV MAVEN_VERSION 3.3.9
 ENV MAVEN_HOME /opt/apache-maven-${MAVEN_VERSION}
-ENV DOCKER_COMPOSE_VERSION 1.7.1
+ENV DOCKER_COMPOSE_VERSION 1.14
 
 USER root
 RUN mkdir -p /opt/jenkins_config/.docker
