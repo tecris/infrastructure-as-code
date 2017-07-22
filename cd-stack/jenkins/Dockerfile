@@ -8,7 +8,7 @@
 ################################################################################
 
 
-FROM jenkins:2.60.2
+FROM jenkins/jenkins:2.60.2
 
 ENV MAVEN_VERSION 3.3.9
 ENV MAVEN_HOME /opt/apache-maven-${MAVEN_VERSION}
