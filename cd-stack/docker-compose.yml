@@ -106,6 +106,8 @@ services:
       - cd_net
     environment:
       - HUB_PORT_4444_TCP_ADDR=selhub
+      - HUB_PORT_4444_TCP_PORT=4444
+
     depends_on:
       - selhub
 
