@@ -11,9 +11,6 @@ services:
       - "8081:8081"
     volumes:
       - nexus-data:/sonatype-work
-    networks:
-      cd_net:
-        ipv4_address: 172.16.238.10
 
   # Raw git server
   # https://github.com/tecris/dockerfiles/tree/master/git-server
@@ -27,18 +24,13 @@ services:
       - "9418:9418"
     volumes:
       - git-server-data:/opt/git/repositories
-    networks:
-      cd_net:
 
   # Jenkins with custom modifications
   # https://github.com/tecris/dockerfiles/tree/master/jenkins
   jenkins:
-    build: ./jenkins
-    image: casadocker/jenkins:1.651.3
+    image: casadocker/jenkins:2.60.2
     container_name: jenkins
     restart: always
-    environment:
-      JENKINS_OPTS: --prefix=/iv-jenkins
     volumes:
       - jenkins-data:/var/jenkins_home
       - iv-tests-data:/opt/jenkins/iv-e2e-java/site/serenity/
@@ -47,9 +39,6 @@ services:
     extra_hosts:
       - "docker.host:${DOCKER_IP}"
       - "cloud.atlas:${DOCKER_IP}"
-    networks:
-      cd_net:
-        ipv4_address: 172.16.238.20
 
   # used to serve E2E test reports
   nginx:
@@ -61,8 +50,6 @@ services:
       - iv-tests-data:/usr/share/nginx/html/iv-tests
     ports:
       - "8002:80"
-    networks:
-      cd_net:
 
   # docker private registry
   bluesky-registry:
@@ -81,9 +68,6 @@ services:
     volumes:
       - /opt/docker_volumes/registry/blue.sky/data:/var/lib/registry
       - /opt/docker_volumes/registry/blue.sky/certs:/certs
-    networks:
-      cd_net:
-        ipv4_address: 172.16.238.21
 
   # Selenium Grid hub
   selhub:
@@ -91,8 +75,6 @@ services:
     container_name: selenium-hub
     ports:
       - 4444:4444
-    networks:
-      - cd_net
 
   # Selenium Grid firefox node
   nodeff:
@@ -102,8 +84,6 @@ services:
       - 5900
     extra_hosts:
       - "docker.host:${DOCKER_IP}"
-    networks:
-      - cd_net
     environment:
       - HUB_PORT_4444_TCP_ADDR=selhub
       - HUB_PORT_4444_TCP_PORT=4444
@@ -119,8 +99,6 @@ services:
       - POSTGRES_DB=sonar
       - POSTGRES_USER=sonar
       - POSTGRES_PASSWORD=sonar
-    networks:
-      - cd_net
 
   # sonarqube.org - quality management platform
   sonar:
@@ -132,16 +110,6 @@ services:
       - SONARQUBE_JDBC_URL=jdbc:postgresql://sonar-db:5432/sonar
     depends_on:
       - sonar-db
-    networks:
-      - cd_net
-
-networks:
-  cd_net:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.238.0/24
 
 volumes:
   iv-tests-data:
