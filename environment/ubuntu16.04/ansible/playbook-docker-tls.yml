@@ -36,3 +36,11 @@
       copy: src=files/mirror.registry_certs/domain.crt dest=/opt/docker_volumes/registry/mirror.registry/certs/domain.crt
     - name: Docker mirror registry key - mirror registry config
       copy: src=files/mirror.registry_certs/domain.key dest=/opt/docker_volumes/registry/mirror.registry/certs/domain.key
+    - name: Configure hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: "{{ item.line }}"
+      with_items:
+        - { line: ''}
+        - { line: '127.0.1.1       mirror.registry' }
+        - { line: '172.17.0.1      blue.sky' }
