@@ -16,18 +16,23 @@
       docker_opts: "--tlsverify --tlscacert=/opt/docker-certs/ca.pem \
                        --tlscert=/opt/docker-certs/server-cert.pem \
                        --tlskey=/opt/docker-certs/server-key.pem \
-                       -H=0.0.0.0:2376 -H unix:///var/run/docker.sock --registry-mirror=https://registry.mirror:5000"
+                       -H=0.0.0.0:2376 -H unix:///var/run/docker.sock --registry-mirror=https://mirror.registry:5555"
     - role: geerlingguy.git
   tasks:
     - name: Avoid using sudo when using docker command
       command: usermod -aG docker {{username}}
     - name: Installs vim package
       apt: pkg=vim state=installed update_cache=true
-    - file: path=/etc/docker/certs.d/blue.sky state=directory mode=0755
+    - file: path=/etc/docker/certs.d/blue.sky:5000 state=directory mode=0755
     - name: Docker private registry CA certificate - docker daemon config
-      copy: src=files/blue.sky_certs/domain.crt dest=/etc/docker/certs.d/blue.sky/ca.crt
+      copy: src=files/blue.sky_certs/domain.crt dest=/etc/docker/certs.d/blue.sky:5000/ca.crt
     - file: path=/opt/docker_volumes/registry/blue.sky/certs owner={{username}} group={{username}} state=directory mode=0775
     - name: Docker private registry CA certificate - private registry config
       copy: src=files/blue.sky_certs/domain.crt dest=/opt/docker_volumes/registry/blue.sky/certs/domain.crt
     - name: Docker private registry key - private registry config
       copy: src=files/blue.sky_certs/domain.key dest=/opt/docker_volumes/registry/blue.sky/certs/domain.key
+    - file: path=/opt/docker_volumes/registry/mirror.registry/certs owner={{username}} group={{username}} state=directory mode=0775
+    - name: Docker mirror registry CA certificate - mirror registry config
+      copy: src=files/mirror.registry_certs/domain.crt dest=/opt/docker_volumes/registry/mirror.registry/certs/domain.crt
+    - name: Docker mirror registry key - mirror registry config
+      copy: src=files/mirror.registry_certs/domain.key dest=/opt/docker_volumes/registry/mirror.registry/certs/domain.key

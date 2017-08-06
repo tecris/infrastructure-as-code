@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "boxcutter/ubuntu1604"
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "ansible/playbook.yml"
+    ansible.playbook = "ansible/playbook-docker-tls.yml"
   end
 
 end
