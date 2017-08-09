@@ -27,9 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # sonar
   config.vm.network "forwarded_port", guest: 9000, host: 18082
 
-  # share project directory (the directory with the Vagrantfile) to /opt/docker_volumes
-  config.vm.synced_folder ".", "/opt/docker_volumes"
-
   config.vm.provider "virtualbox" do |v|
     v.name = "continuous"
     v.memory = 4096
