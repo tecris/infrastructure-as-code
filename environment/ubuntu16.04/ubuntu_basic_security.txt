@@ -1,0 +1,11 @@
+Change the password for the root account
+Create and configure a deploy user account
+Configure ssh public key authentication for the deploy account
+Add the deploy account to the sudoers list
+Configure automatic updates
+Configure a firewall
+Install and configure Logwatch
+Lockdown ssh access
+ - use non-standard port for ssh
+ - disable password based authentication for SSH
+ - disable SSH access for the root account
