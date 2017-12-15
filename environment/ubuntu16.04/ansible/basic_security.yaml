@@ -1,0 +1,58 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+
+  vars:
+    # http://docs.ansible.com/ansible/latest/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module
+    # mkpasswd --method=sha-512
+    # root password vienna
+    UBUNTU_COMMON_ROOT_PASSWORD: '$6$OBp3EDd9GyfeaA/o$zAC0a51gWZ1jE6NzmqF1AvWi.ejigeIttLrM9qAmblVW3W6MmU.Vfdulpm3zE7An.yOOKusq3kvaCnIgasKkd/'
+    # deploy password austria
+    UBUNTU_COMMON_DEPLOY_PASSWORD: '$6$tHy9O5buht$e8IDjnpfTMucT6nBhmE7T6NrlrIXkAMgE85StwwgTehy6SwA1qr4m5bSK7W880SdllXLx000eFjZyC7GbQABO1'
+    ubuntu_common_deploy_user_name: deploy
+
+    ubuntu_common_required_packages:
+      - ufw
+
+  tasks:
+    - name: Update APT package cache
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Upgrade APT to the latest packages
+      apt: upgrade=safe
+
+    - name: Install required packages
+      apt: state=installed pkg={{ item }}
+      with_items: "{{ ubuntu_common_required_packages }}"
+
+    - name: Setup ufw
+      ufw: state=enabled policy=deny
+
+    - name: Allow ssh traffic
+      ufw: rule=allow port={{ ubuntu_common_ssh_port }} proto=tcp
+
+    - name: Change ssh port
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^Port\s"
+                  line="Port {{ ubuntu_common_ssh_port }}"
+                  state=present
+      notify: Restart ssh
+
+    - name: Disallow password authentication
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^PasswordAuthentication"
+                  line="PasswordAuthentication no"
+                  state=present
+      notify: Restart ssh
+
+    - name: Disallow root SSH access
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^PermitRootLogin"
+                  line="PermitRootLogin no"
+                  state=present
+      notify: Restart ssh
+
+  handlers:
+    - name: Restart ssh
+      service: name=ssh state=restarted
