@@ -1,5 +1,5 @@
 version: '3'
-services: 
+services:
 
   influxdb:
     image: influxdb:1.4-alpine
@@ -16,4 +16,7 @@ services:
       - "3000:3000"
     environment:
       - GF_INSTALL_PLUGINS=natel-influx-admin-panel
+      - GF_SECURITY_ADMIN_USER=rango
       - GF_SECURITY_ADMIN_PASSWORD=1admin!
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
