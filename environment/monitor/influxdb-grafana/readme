@@ -1,0 +1,4 @@
+
+# === INFLUXDB & GRAFANA ===
+
+docker-compose -f docker-compose_influxdb_grafana.yml up -d
