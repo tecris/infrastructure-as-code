@@ -3,15 +3,14 @@
 # for token
 # docker-compose up -d
 # localhost:3000 -> admin/admin
-# follow top left link > admin > API Keys 
+# follow top left link > admin > API Keys
 # add key with role Admin and voila
 
-. token
+. properties
 
 echo $TOKEN
-
-HOST=localhost
-GRAFANA_PORT=3000
+echo $HOST
+echo $GRAFANA_PORT
 
 # create database in influxdb
 curl -XPOST http://${HOST}:8086/query --data-urlencode "q=CREATE DATABASE telegraf"
