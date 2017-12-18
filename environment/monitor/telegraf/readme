@@ -1,6 +1,3 @@
-
 # === TELEGRAF ===
+# based on 
 # https://www.jacobtomlinson.co.uk/monitoring/2016/06/23/running-telegraf-inside-a-container/
-# generate telegraf config
-docker run --rm telegraf --input-filter cpu:mem:net:swap --output-filter influxdb config > ./telegraf.conf
-docker-compose -f docker-compose_telegraf.yml up -d
