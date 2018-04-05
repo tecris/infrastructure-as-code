@@ -8,7 +8,7 @@ services:
       HOST_PROC: /rootfs/proc
       HOST_SYS: /rootfs/sys
       HOST_ETC: /rootfs/etc
-    hostname: rexina
+    hostname: $HOST_NAME
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
