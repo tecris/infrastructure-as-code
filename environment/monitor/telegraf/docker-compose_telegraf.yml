@@ -15,3 +15,4 @@ services:
       - /sys:/rootfs/sys:ro
       - /proc:/rootfs/proc:ro
       - /etc:/rootfs/etc:ro
+      - /var/log/nginx/access.log:/var/log/nginx/access.log:ro
