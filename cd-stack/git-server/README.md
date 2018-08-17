@@ -1,6 +1,7 @@
 # Git server on Docker
 </br>
-Raw [Git Server](http://git-scm.com/book/en/v1/Git-on-t<e-Server-Getting-Git-on-a-Server) (ssh & git protocols)
+
+Raw [Git Server](https://git-scm.com/book/en/v1/Git-on-the-Server) (ssh & git protocols)
 
 #### Run docker git-server container
   `$ docker-compose up -d`
